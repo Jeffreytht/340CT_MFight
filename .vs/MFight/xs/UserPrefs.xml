@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{321C4CA3-6A82-5CB0-B9C7-2F1794DAB8E6}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Artwork/Scripts/Player.cs">
+    <Files>
+      <File FileName="Assets/Artwork/Scripts/Player.cs" Line="3" Column="19" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MFight" expanded="True">
+            <Node name="Assets" expanded="True" selected="True">
+              <Node name="Artwork" expanded="True">
+                <Node name="Scripts" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="3ae4328b-991b-46db-a7c1-c4ae53bde6de" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
