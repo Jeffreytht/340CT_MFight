@@ -4965,25 +4965,7 @@ MonoBehaviour:
   coinPrefab: {fileID: 98292859}
   tileMap: {fileID: 299026531}
   respawnTime: 2
---- !u!1 &1232585245
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1195019373}
-  - component: {fileID: 1195019375}
-  - component: {fileID: 1195019374}
-  m_Layer: 5
-  m_Name: score
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1195019373
+---  !u!224 &1195019373
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
