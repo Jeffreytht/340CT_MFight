@@ -9,6 +9,8 @@ public class SeedGenerator : MonoBehaviour
     public Tilemap tileMap;
     public float respawnTime = 2.0f;
 
+    private int countdownTime = 3;
+
     private int minX = int.MaxValue;
     private int maxX = int.MinValue;
     private int minY = int.MaxValue;
@@ -31,8 +33,8 @@ public class SeedGenerator : MonoBehaviour
                 }
             }
         }
-
-        StartCoroutine(StartGame());
+        StartCoroutine(Delay());
+        
     }
 
     private void SpawnCoin()
@@ -47,6 +49,17 @@ public class SeedGenerator : MonoBehaviour
         coin.transform.position = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
     }
 
+    IEnumerator Delay()
+    {
+        while(countdownTime>0)
+        {
+            yield return new WaitForSeconds(1f);
+
+            countdownTime--;
+        }
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(StartGame());
+    }
 
     IEnumerator StartGame()
     {

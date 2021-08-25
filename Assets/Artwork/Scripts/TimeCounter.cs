@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
+using TMPro;
 public class TimeCounter : MonoBehaviour
 {
-    Text timerText;//text to display the timer
-    public float timeRemaining = 120;
+    TMP_Text timerText;//text to display the timer
+    public float timeRemaining = 300;
     public bool timerIsRunning = false;
+    private int countdownTime = 3;
 	
     // Start is called before the first frame update
     void Start()
     {
-        //starts the timer automatically
+        StartCoroutine(Delay());
+        
+        timerText = GetComponent<TMP_Text>();//get the timer text   
+    }
+    IEnumerator Delay()
+    {
+        while(countdownTime>0)
+        {
+            yield return new WaitForSeconds(1f);
+
+            countdownTime--;
+        }
+        yield return new WaitForSeconds(1f);
+        //when countdown finish only start run the time
         timerIsRunning = true;
-        timerText = GetComponent<Text>();//get the timer text   
     }
 
     // Update is called once per frame
