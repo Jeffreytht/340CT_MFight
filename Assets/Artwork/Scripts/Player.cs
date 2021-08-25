@@ -5,48 +5,35 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private BoxCollider2D boxCollider;
-    private Vector3 moveDelta;
-    private RaycastHit2D hit;
-    private Transform name;
+    public float moveSpeed = 1f;
+    public Rigidbody2D rb;
 
-    void Start()
+    Vector2 movement;
+
+    private void Update()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        name = transform.GetChild(0).GetChild(0);
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
     }
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        Vector2 newPos = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(newPos);
 
-        moveDelta = new Vector3(x, y, 0);
-
-
-        if (moveDelta.x > 0)
-        {
+        if (movement.x > 0)
             transform.localScale = Vector3.one;
-            name.localScale=Vector3.one;
-        }
-        else if (moveDelta.x < 0)
-        {
+        else if (movement.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
-            name.localScale=new Vector3(-1,1,1);
-        }
-        
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null) 
-        {
-            transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-        }
+    }
 
-        hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-        if (hit.collider == null) 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
         {
-            transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            Destroy(collision.gameObject);
         }
     }
 }
