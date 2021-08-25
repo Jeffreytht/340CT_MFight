@@ -10,11 +10,18 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     PhotonView view;
 
+    //private Transform name;
+    //private bool check = false;//when countdown finish only able to move
+    //private int countdownTime = 3;
+
     Vector2 movement;
 
     void Start()
     {
         view = GetComponent<PhotonView>();
+
+        //name = transform.GetChild(0).GetChild(0);
+        //StartCoroutine(Delay());
     }
 
     private void Update()
@@ -34,10 +41,15 @@ public class Player : MonoBehaviour
         {
             Vector2 newPos = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
             rb.MovePosition(newPos);
+            //if (check)
+            //{
+            //    rb.MovePosition(newPos);
+            //}
 
             if (movement.x > 0)
             {
                 transform.localScale = Vector3.one;
+                //name.localScale = Vector3.one;
             }
             else if (movement.x < 0)
             {
@@ -45,6 +57,18 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    //IEnumerator Delay()
+    //{
+    //    while(countdownTime>0)
+    //    {
+    //        yield return new WaitForSeconds(1f);
+
+    //        countdownTime--;
+    //    }
+    //    yield return new WaitForSeconds(1f);
+    //    check = true;
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
