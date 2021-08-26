@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     PhotonView view;
 
-    //private Transform name;
+    private Transform name;
+    public TMP_Text text_name;
     //private bool check = false;//when countdown finish only able to move
     //private int countdownTime = 3;
 
@@ -20,7 +22,11 @@ public class Player : MonoBehaviour
     {
         view = GetComponent<PhotonView>();
 
-        //name = transform.GetChild(0).GetChild(0);
+        name = transform.GetChild(0).GetChild(0);
+        
+        text_name.text=view.Owner.NickName;
+
+        
         //StartCoroutine(Delay());
     }
 
@@ -49,11 +55,13 @@ public class Player : MonoBehaviour
             if (movement.x > 0)
             {
                 transform.localScale = Vector3.one;
-                //name.localScale = Vector3.one;
+                name.localScale = Vector3.one;
             }
             else if (movement.x < 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
+                name.localScale = new Vector3(-1,1,1);
+
             }
         }
     }
