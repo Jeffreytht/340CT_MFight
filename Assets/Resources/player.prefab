@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6460107651880634889}
   - component: {fileID: 379675559470086664}
   - component: {fileID: 727846721497212788}
-  - component: {fileID: 515609947827529362}
   - component: {fileID: 4797018355539840102}
   - component: {fileID: 2995339536345409764}
   - component: {fileID: 4680394245768503492}
+  - component: {fileID: 3126288881676015173}
   m_Layer: 7
   m_Name: player
   m_TagString: Untagged
@@ -114,27 +114,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.09949395, y: 0.087824225}
   m_EdgeRadius: 0
---- !u!50 &515609947827529362
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2995339536345409755}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: f98a286f7042c4d5eb4fe7fd0310b220, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &4797018355539840102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  rb: {fileID: 515609947827529362}
+  rb: {fileID: 0}
   playerName: {fileID: 540447692865739477}
 --- !u!114 &2995339536345409764
 MonoBehaviour:
@@ -206,6 +185,27 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!50 &3126288881676015173
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2995339536345409755}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &3043574397749449517
 GameObject:
   m_ObjectHideFlags: 0

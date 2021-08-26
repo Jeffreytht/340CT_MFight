@@ -9,14 +9,17 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
     public Rigidbody2D rb;
-    PhotonView view;
 
     public TMP_Text playerName;
+
+    private PhotonView view;
+    private BoxCollider2D boxCollider;
 
     Vector2 movement;
 
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         view = GetComponent<PhotonView>();
         playerName.text = view.Owner.NickName;
     }
@@ -36,8 +39,19 @@ public class Player : MonoBehaviour
     {
         if (view.IsMine)
         {
-            Vector2 newPos = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(newPos);
+            Vector3 moveDelta = new Vector3(movement.x, movement.y, 0);
+
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+            if (hit.collider == null)
+            {
+                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            }
+
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+            if (hit.collider == null)
+            {
+                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            }
 
             if (movement.x > 0)
             {
