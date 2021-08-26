@@ -10,37 +10,54 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
+    public TMP_InputField nameInput;
+
     public TextMeshProUGUI createErrMsgText;
     public TextMeshProUGUI joinErrMsgText;
+    public Vibration vibration;
     public int maxNumofPlayer = 2;
+ 
 
     public void CreateRoom()
     {
-        if(string.IsNullOrEmpty(createInput.text))
+        if(string.IsNullOrEmpty(createInput.text.Trim()))
         {
             createErrMsgText.SetText("Please enter a room name");
         }
-        else{
+        else if(string.IsNullOrEmpty(nameInput.text.Trim()))
+        {
+            vibration.Shake();
+        }
+        else
+        {
             createErrMsgText.SetText("");
 
             RoomOptions options = new RoomOptions();
             options.MaxPlayers = (byte)maxNumofPlayer;
 
+            PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.CreateRoom(createInput.text, options);
         }
     }
 
     public void JoinRoom()
     {
-        if(string.IsNullOrEmpty(joinInput.text))
+        if(string.IsNullOrEmpty(joinInput.text.Trim()))
         {
             joinErrMsgText.SetText("Please enter a room name");
         }
-        else{
+        else if(string.IsNullOrEmpty(nameInput.text.Trim()))
+        {
+            vibration.Shake();
+        }
+        else
+        {
             joinErrMsgText.SetText(""); 
+            PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.JoinRoom(joinInput.text);
         }
     }
+
 
     public override void OnJoinedRoom()
     {
@@ -67,4 +84,5 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     {
         joinErrMsgText.SetText(message);
     }
+   
 }
