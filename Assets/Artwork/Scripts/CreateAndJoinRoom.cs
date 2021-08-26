@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 
 public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
@@ -11,17 +12,21 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     public TMP_InputField joinInput;
     public TextMeshProUGUI createErrMsgText;
     public TextMeshProUGUI joinErrMsgText;
+    public int maxNumofPlayer = 2;
 
     public void CreateRoom()
     {
         if(string.IsNullOrEmpty(createInput.text))
         {
             createErrMsgText.SetText("Please enter a room name");
-            Debug.Log("Create room failed");
         }
         else{
-            createErrMsgText.SetText(""); 
-            PhotonNetwork.CreateRoom(createInput.text);
+            createErrMsgText.SetText("");
+
+            RoomOptions options = new RoomOptions();
+            options.MaxPlayers = (byte)maxNumofPlayer;
+
+            PhotonNetwork.CreateRoom(createInput.text, options);
         }
     }
 
