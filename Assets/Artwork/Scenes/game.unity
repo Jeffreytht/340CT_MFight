@@ -4078,6 +4078,51 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &481460625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 481460627}
+  - component: {fileID: 481460626}
+  m_Layer: 0
+  m_Name: SpawnCoin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &481460626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481460625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb13148002c04b4a9c522a934e91328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 8803618203631226929, guid: 3ea0368b05bd24140aeb176130906f4c, type: 3}
+  tileMap: {fileID: 299026531}
+--- !u!4 &481460627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481460625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.23283017, y: -0.3066066, z: -1.5745504}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &709147046
 GameObject:
   m_ObjectHideFlags: 0
@@ -4438,7 +4483,6 @@ GameObject:
   - component: {fileID: 1116706346}
   - component: {fileID: 1116706345}
   - component: {fileID: 1116706344}
-  - component: {fileID: 1116706347}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4511,21 +4555,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1116706347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116706343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c9277fc31d54ac090051686e0a0615, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 8803618203631226929, guid: 3ea0368b05bd24140aeb176130906f4c, type: 3}
-  tileMap: {fileID: 299026531}
-  respawnTime: 2
 --- !u!1 &1162874341
 GameObject:
   m_ObjectHideFlags: 0
