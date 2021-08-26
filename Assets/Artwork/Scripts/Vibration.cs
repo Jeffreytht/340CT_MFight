@@ -7,16 +7,13 @@ public class Vibration : MonoBehaviour {
     public static Vibration instance;
 	private Vector3 originPosition;
 	private Quaternion originRotation;
+
 	public float shake_decay = 0.002f;
 	public float shake_intensity = .3f;
-    public bool isShaking = false;
-
+	public bool isShaking = false;
 	private float temp_shake_intensity = 0;
 	
-	public void Start (){
-        instance=this;
-	}
-	
+
 	public void Update (){
 		if (temp_shake_intensity > 0 && isShaking == true){
 			transform.position = originPosition + Random.insideUnitSphere * temp_shake_intensity;
