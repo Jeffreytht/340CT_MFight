@@ -31,12 +31,16 @@ public class SpawnPlayer : MonoBehaviour
             }
         }
 
-        Vector3 bl = tileMap.CellToWorld(new Vector3Int(minX, minY, (int)tileMap.transform.position.y));
-        Vector3 tr = tileMap.CellToWorld(new Vector3Int(minX + 1, minY + 1, (int)tileMap.transform.position.y));
+        int localX = PhotonNetwork.IsMasterClient ? minX : maxX;
+        int localY = minY;
+
+        Vector3 bl = tileMap.CellToWorld(new Vector3Int(localX, localY, (int)tileMap.transform.position.y));
+        Vector3 tr = tileMap.CellToWorld(new Vector3Int(localX + 1, localY + 1, (int)tileMap.transform.position.y));
 
         float x = (bl.x + tr.x) / 2;
         float y = (bl.y + tr.y) / 2;
 
+   
         PhotonNetwork.Instantiate(playerPrefab.name, new Vector2(x, y), Quaternion.identity);
     }
 

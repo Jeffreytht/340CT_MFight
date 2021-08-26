@@ -4078,51 +4078,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &481460625
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 481460627}
-  - component: {fileID: 481460626}
-  m_Layer: 0
-  m_Name: SpawnCoin
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &481460626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481460625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efb13148002c04b4a9c522a934e91328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 8803618203631226929, guid: 3ea0368b05bd24140aeb176130906f4c, type: 3}
-  tileMap: {fileID: 299026531}
---- !u!4 &481460627
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481460625}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.23283017, y: -0.3066066, z: -1.5745504}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &709147046
 GameObject:
   m_ObjectHideFlags: 0
@@ -4134,7 +4089,6 @@ GameObject:
   - component: {fileID: 709147047}
   - component: {fileID: 709147050}
   - component: {fileID: 709147049}
-  - component: {fileID: 709147048}
   m_Layer: 5
   m_Name: TimerText
   m_TagString: Untagged
@@ -4161,20 +4115,6 @@ RectTransform:
   m_AnchoredPosition: {x: 115.67999, y: -38.600006}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &709147048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 709147046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fcf7250e44cc5d49a9621be4e4b03da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeRemaining: 120
-  timerIsRunning: 0
 --- !u!114 &709147049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4350,7 +4290,7 @@ GameObject:
   - component: {fileID: 921073647}
   - component: {fileID: 921073646}
   m_Layer: 5
-  m_Name: Countdown
+  m_Name: CountdownText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4991,11 +4931,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1594472915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a410cde4928109445adf9441bcf78cd9, type: 3}
+  m_Script: {fileID: 11500000, guid: adc8e26d974d14d4a8c15edd479d99a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   countdownTime: 3
+  gameTime: 20
   countdownText: {fileID: 921073646}
+  timerText: {fileID: 709147049}
+  coinGenerator: {fileID: 1629647953}
 --- !u!4 &1594472917
 Transform:
   m_ObjectHideFlags: 0
@@ -5009,6 +4952,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1629647952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1629647954}
+  - component: {fileID: 1629647953}
+  m_Layer: 0
+  m_Name: SpawnCoin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1629647953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629647952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb13148002c04b4a9c522a934e91328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinPrefab: {fileID: 8803618203631226929, guid: 3ea0368b05bd24140aeb176130906f4c, type: 3}
+  tileMap: {fileID: 299026531}
+  spawnInterval: 1
+--- !u!4 &1629647954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629647952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2629532, y: -1.5576375, z: -2.9863803}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1644015180
 GameObject:
