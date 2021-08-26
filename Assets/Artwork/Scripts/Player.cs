@@ -9,25 +9,19 @@ public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
     public Rigidbody2D rb;
-    PhotonView view;
 
-    private Transform name;
-    public TMP_Text text_name;
-    //private bool check = false;//when countdown finish only able to move
-    //private int countdownTime = 3;
+    public TMP_Text playerName;
+
+    private PhotonView view;
+    private BoxCollider2D boxCollider;
 
     Vector2 movement;
 
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         view = GetComponent<PhotonView>();
-
-        name = transform.GetChild(0).GetChild(0);
-        
-        text_name.text=view.Owner.NickName;
-
-        
-        //StartCoroutine(Delay());
+        playerName.text = view.Owner.NickName;
     }
 
     private void Update()
@@ -45,38 +39,33 @@ public class Player : MonoBehaviour
     {
         if (view.IsMine)
         {
-            Vector2 newPos = rb.position + movement * moveSpeed * Time.fixedDeltaTime;
-            rb.MovePosition(newPos);
-            //if (check)
-            //{
-            //    rb.MovePosition(newPos);
-            //}
+            Vector3 moveDelta = new Vector3(movement.x, movement.y, 0);
+
+            RaycastHit2D hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+            if (hit.collider == null)
+            {
+                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+            }
+
+            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+            if (hit.collider == null)
+            {
+                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+            }
 
             if (movement.x > 0)
             {
                 transform.localScale = Vector3.one;
-                name.localScale = Vector3.one;
+                playerName.transform.localScale = Vector3.one;
             }
             else if (movement.x < 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
-                name.localScale = new Vector3(-1,1,1);
+                playerName.transform.localScale = new Vector3(-1, 1, 1);
 
             }
         }
     }
-
-    //IEnumerator Delay()
-    //{
-    //    while(countdownTime>0)
-    //    {
-    //        yield return new WaitForSeconds(1f);
-
-    //        countdownTime--;
-    //    }
-    //    yield return new WaitForSeconds(1f);
-    //    check = true;
-    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

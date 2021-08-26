@@ -8,6 +8,9 @@ public class SpawnCoin : MonoBehaviour
 {
     public GameObject coinPrefab;
     public Tilemap tileMap;
+    public int spawnInterval;
+
+    private bool isSpawnCoinEnable;
     private int minX = int.MaxValue;
     private int maxX = int.MinValue;
     private int minY = int.MaxValue;
@@ -30,27 +33,37 @@ public class SpawnCoin : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void StartSpawnCoin()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        isSpawnCoinEnable = true;
         StartCoroutine(StartGame());
     }
 
-    private void createCoin()
+    public void StopSpawnCoin()
     {
-        int x = Random.Range(minX, maxX);
-        int y = Random.Range(minY, maxY);
-
-        Vector3 bl = tileMap.CellToWorld(new Vector3Int(x, y, (int)tileMap.transform.position.y));
-        Vector3 tr = tileMap.CellToWorld(new Vector3Int(x + 1, y + 1, (int)tileMap.transform.position.y));
-
-        Vector2 pos = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
-        PhotonNetwork.Instantiate(coinPrefab.name, pos, Quaternion.identity);
+        isSpawnCoinEnable = false;
     }
 
     IEnumerator StartGame()
     {
-        while (true)
+        while (isSpawnCoinEnable)
         {
-            yield return new WaitForSeconds(3);
-            createCoin();
+            yield return new WaitForSeconds(spawnInterval);
+            if (isSpawnCoinEnable)
+            {
+                int x = Random.Range(minX, maxX);
+                int y = Random.Range(minY, maxY);
+
+                Vector3 bl = tileMap.CellToWorld(new Vector3Int(x, y, (int)tileMap.transform.position.y));
+                Vector3 tr = tileMap.CellToWorld(new Vector3Int(x + 1, y + 1, (int)tileMap.transform.position.y));
+
+                Vector2 pos = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
+                PhotonNetwork.Instantiate(coinPrefab.name, pos, Quaternion.identity);
+            }
         }
     }
 

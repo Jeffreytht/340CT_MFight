@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using Photon.Realtime;
 using TMPro;
 
 public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
@@ -10,68 +11,78 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
     public TMP_InputField nameInput;
-    public GameObject nameObject;
+
+    public TextMeshProUGUI createErrMsgText;
+    public TextMeshProUGUI joinErrMsgText;
+    public Vibration vibration;
+    public int maxNumofPlayer = 2;
  
 
-    public void CreateRoom(GameObject errorWindowCreate)
+    public void CreateRoom()
     {
         if(string.IsNullOrEmpty(createInput.text.Trim()))
         {
-            errorWindowCreate.SetActive(true); 
-            Debug.Log("Please enter an room name");
+            createErrMsgText.SetText("Please enter a room name");
         }
         else if(string.IsNullOrEmpty(nameInput.text.Trim()))
         {
-            errorWindowCreate.SetActive(false); 
-            Debug.Log("name is empty");
-            Vibration.instance.Shake();
+            vibration.Shake();
         }
-        else{
-            errorWindowCreate.SetActive(false);
-            
+        else
+        {
+            createErrMsgText.SetText("");
+
+            RoomOptions options = new RoomOptions();
+            options.MaxPlayers = (byte)maxNumofPlayer;
+
             PhotonNetwork.NickName = nameInput.text.Trim();
-            PhotonNetwork.CreateRoom(createInput.text);
+            PhotonNetwork.CreateRoom(createInput.text, options);
         }
     }
 
-    public void JoinRoom(GameObject errorWindowJoin)
+    public void JoinRoom()
     {
         if(string.IsNullOrEmpty(joinInput.text.Trim()))
         {
-            errorWindowJoin.SetActive(true); 
-            Debug.Log("Please enter an room name");
+            joinErrMsgText.SetText("Please enter a room name");
         }
         else if(string.IsNullOrEmpty(nameInput.text.Trim()))
         {
-            errorWindowJoin.SetActive(false); 
-            Debug.Log("name is empty");
-            Vibration.instance.Shake();
+            vibration.Shake();
         }
-        else{
-            errorWindowJoin.SetActive(false); 
+        else
+        {
+            joinErrMsgText.SetText(""); 
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.JoinRoom(joinInput.text);
         }
     }
 
+
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("game");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            PhotonNetwork.LoadLevel("game");
+        else
+            PhotonNetwork.LoadLevel("waitingOpponent");
     }
 
-    public void DisplayErrorCreateMessage(GameObject errorWindowCreate) {
-    
-        if (createInput.text.Trim() != "") { 
-             errorWindowCreate.SetActive(false); 
-
-        }
+    public void UpdateCreateErrMsg() {
+        createErrMsgText.SetText("");
     }
-    public void DisplayErrorJoinMessage(GameObject errorWindowJoin) {
-    
-        if (joinInput.text.Trim() != "") { 
-             errorWindowJoin.SetActive(false); 
 
-        }
+    public void UpdateJoinErrMsg() {
+        joinErrMsgText.SetText("");
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        createErrMsgText.SetText(message);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        joinErrMsgText.SetText(message);
     }
    
 }
