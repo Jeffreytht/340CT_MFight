@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Artwork/Scenes/loading.unity
     guid: 07c435db6ea1d4a339fc63d9134e634d
+  - enabled: 1
+    path: Assets/Artwork/Scenes/waitingOpponent.unity
+    guid: f52a3283486b746ee87e4b4983ed6d2a
   m_configObjects: {}

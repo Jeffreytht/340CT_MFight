@@ -9,50 +9,57 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
     public TMP_InputField createInput;
     public TMP_InputField joinInput;
+    public TextMeshProUGUI createErrMsgText;
+    public TextMeshProUGUI joinErrMsgText;
 
-    public void CreateRoom(GameObject errorWindowCreate)
+    public void CreateRoom()
     {
         if(string.IsNullOrEmpty(createInput.text))
         {
-            errorWindowCreate.SetActive(true); 
-            Debug.Log("Please enter an room name");
+            createErrMsgText.SetText("Please enter a room name");
+            Debug.Log("Create room failed");
         }
         else{
-            errorWindowCreate.SetActive(false); 
+            createErrMsgText.SetText(""); 
             PhotonNetwork.CreateRoom(createInput.text);
         }
     }
 
-    public void JoinRoom(GameObject errorWindowJoin)
+    public void JoinRoom()
     {
         if(string.IsNullOrEmpty(joinInput.text))
         {
-            errorWindowJoin.SetActive(true); 
-            Debug.Log("Please enter an room name");
+            joinErrMsgText.SetText("Please enter a room name");
         }
         else{
-            errorWindowJoin.SetActive(false); 
+            joinErrMsgText.SetText(""); 
             PhotonNetwork.JoinRoom(joinInput.text);
         }
     }
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("game");
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+            PhotonNetwork.LoadLevel("game");
+        else
+            PhotonNetwork.LoadLevel("waitingOpponent");
     }
 
-    public void DisplayErrorCreateMessage(GameObject errorWindowCreate) {
-    
-        if (createInput.text != "") { 
-             errorWindowCreate.SetActive(false); 
-
-        }
+    public void UpdateCreateErrMsg() {
+        createErrMsgText.SetText("");
     }
-    public void DisplayErrorJoinMessage(GameObject errorWindowJoin) {
-    
-        if (joinInput.text != "") { 
-             errorWindowJoin.SetActive(false); 
 
-        }
+    public void UpdateJoinErrMsg() {
+        joinErrMsgText.SetText("");
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        createErrMsgText.SetText(message);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        joinErrMsgText.SetText(message);
     }
 }
