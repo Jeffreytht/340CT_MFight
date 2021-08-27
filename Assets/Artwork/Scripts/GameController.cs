@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioController.getInstance().PlaySong(AudioController.GameState.Game);
         timerText.SetText(secToString(gameTime));
         StartCoroutine(StartCountDown());
     }
