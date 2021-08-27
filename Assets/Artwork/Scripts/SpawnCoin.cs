@@ -50,7 +50,7 @@ public class SpawnCoin : MonoBehaviour
 
     IEnumerator StartGame()
     {
-        while (isSpawnCoinEnable)
+        for (int i = 0;  isSpawnCoinEnable; i++)
         {
             yield return new WaitForSeconds(spawnInterval);
             if (isSpawnCoinEnable)
@@ -62,7 +62,23 @@ public class SpawnCoin : MonoBehaviour
                 Vector3 tr = tileMap.CellToWorld(new Vector3Int(x + 1, y + 1, (int)tileMap.transform.position.y));
 
                 Vector2 pos = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
-                PhotonNetwork.Instantiate(coinPrefab.name, pos, Quaternion.identity);
+                GameObject obj = PhotonNetwork.Instantiate(coinPrefab.name, pos, Quaternion.identity);
+
+                Coin.Operator op = Coin.Operator.Addition;
+                int operand = 1;
+
+                if (i > 0 && i %5 == 0)
+                {
+                    op = Random.Range(0, 1) == 0 ? Coin.Operator.Multiplication : Coin.Operator.Division;
+                    operand = Random.Range(2, 5);
+                }
+                else
+                {
+                    op = Random.Range(0, 1) == 0 ? Coin.Operator.Addition : Coin.Operator.Subtraction;
+                    operand = Random.Range(1, 99);
+                }
+
+                obj.GetComponent<Coin>().SetValue(op, operand);
             }
         }
     }

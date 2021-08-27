@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
@@ -58,7 +59,12 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         }
     }
 
-
+    public void BackButton()
+    {
+        PhotonNetwork.Disconnect ();
+        SceneManager.LoadScene("menu");
+    }
+  
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount == 2)

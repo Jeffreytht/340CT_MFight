@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class GameController : MonoBehaviour
 {
@@ -53,6 +55,9 @@ public class GameController : MonoBehaviour
 
         countdownText.gameObject.SetActive(true);
         countdownText.text = "Time Up";
+
+        new WaitForSeconds(3);
+        SceneManager.LoadScene("leaderbroad");
     }
 
     private string secToString(int sec)
