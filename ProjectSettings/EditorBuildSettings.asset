@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Artwork/Scenes/waitingOpponent.unity
     guid: f52a3283486b746ee87e4b4983ed6d2a
+  - enabled: 1
+    path: Assets/Artwork/Scenes/leaderbroad.unity
+    guid: 47ac924d2f7bee94e9528785e5544668
   m_configObjects: {}
