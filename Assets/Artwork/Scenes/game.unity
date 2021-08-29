@@ -4526,6 +4526,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMap: {fileID: 299026531}
   playerPrefab: {fileID: 2995339536345409755, guid: d511530e241e34092a3c99357af03ff1, type: 3}
+  selectedskin: {fileID: 4525218019661727049, guid: becd811efc4b1e0468255d3081942311, type: 3}
+  sr: {fileID: 0}
+  skins:
+  - {fileID: 713163285030852893, guid: 191a438f7a58e4956b192bb34cb68543, type: 3}
+  - {fileID: -5908182510162382659, guid: 191a438f7a58e4956b192bb34cb68543, type: 3}
 --- !u!4 &1162874343
 Transform:
   m_ObjectHideFlags: 0

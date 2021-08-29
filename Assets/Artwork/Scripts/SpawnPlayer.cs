@@ -12,6 +12,8 @@ public class SpawnPlayer : MonoBehaviour
     private int maxY = int.MinValue;
     public Tilemap tileMap;
     public GameObject playerPrefab;
+ 
+    public List<Sprite> skins = new List<Sprite>();
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +42,40 @@ public class SpawnPlayer : MonoBehaviour
         float x = (bl.x + tr.x) / 2;
         float y = (bl.y + tr.y) / 2;
 
-   
+
+        if (PlayerPrefs.GetInt("skinBool") == 0 && PhotonNetwork.IsMasterClient)
+        {
+
+            playerPrefab.GetComponent<SpriteRenderer>().sprite = skins[PlayerPrefs.GetInt("skinIndex")];
+            PlayerPrefs.SetInt("skinBool", 1);
+        }
+
+        if (PlayerPrefs.GetInt("skinBool2") == 0 && !PhotonNetwork.IsMasterClient)
+        {
+
+            playerPrefab.GetComponent<SpriteRenderer>().sprite = skins[PlayerPrefs.GetInt("skinIndex2")];
+            PlayerPrefs.SetInt("skinBool2", 1);
+        }
+
+
         PhotonNetwork.Instantiate(playerPrefab.name, new Vector2(x, y), Quaternion.identity);
+
+        if (PlayerPrefs.GetInt("skinBool") == 1 && PhotonNetwork.IsMasterClient)
+        {
+
+            playerPrefab.GetComponent<SpriteRenderer>().sprite = skins[PlayerPrefs.GetInt("skinIndex2")];
+            PlayerPrefs.SetInt("skinBool", 0);
+        }
+
+        if (PlayerPrefs.GetInt("skinBool2") == 1 && !PhotonNetwork.IsMasterClient)
+        {
+
+            playerPrefab.GetComponent<SpriteRenderer>().sprite = skins[PlayerPrefs.GetInt("skinIndex")];
+            PlayerPrefs.SetInt("skinBool2", 0);
+        }
+
+
+
     }
 
 }

@@ -7,6 +7,7 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
 public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
     public TMP_InputField createInput;
@@ -17,7 +18,14 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI joinErrMsgText;
     public Vibration vibration;
     public int maxNumofPlayer = 2;
- 
+
+    public SpriteRenderer sr;
+    public List<Sprite> skins = new List<Sprite>();
+    private int selectedSkin = 0;
+    public GameObject playerskin;
+
+
+
 
     public void CreateRoom()
     {
@@ -32,6 +40,10 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         else
         {
             createErrMsgText.SetText("");
+
+
+            PlayerPrefs.SetInt("skinIndex", selectedSkin);
+            PlayerPrefs.SetInt("skinBool", 0);
 
             RoomOptions options = new RoomOptions();
             options.MaxPlayers = (byte)maxNumofPlayer;
@@ -53,7 +65,12 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         }
         else
         {
-            joinErrMsgText.SetText(""); 
+            joinErrMsgText.SetText("");
+
+
+            PlayerPrefs.SetInt("skinIndex2", selectedSkin);
+            PlayerPrefs.SetInt("skinBool2", 0);
+
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.JoinRoom(joinInput.text);
         }
@@ -90,5 +107,39 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     {
         joinErrMsgText.SetText(message);
     }
-   
+
+    public void NextOption()
+    {
+
+        selectedSkin = selectedSkin + 1;
+
+        if (selectedSkin == skins.Count)
+        {
+
+            selectedSkin = 0;
+
+        }
+
+        sr.sprite = skins[selectedSkin];
+
+
+    }
+
+    public void BackOption()
+    {
+
+        selectedSkin = selectedSkin - 1;
+
+        if (selectedSkin < 0)
+        {
+
+            selectedSkin = skins.Count - 1;
+
+        }
+
+        sr.sprite = skins[selectedSkin];
+
+
+    }
+
 }
