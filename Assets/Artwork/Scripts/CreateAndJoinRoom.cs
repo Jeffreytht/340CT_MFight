@@ -7,6 +7,7 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
 public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 {
     public TMP_InputField createInput;
@@ -17,7 +18,9 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI joinErrMsgText;
     public Vibration vibration;
     public int maxNumofPlayer = 2;
- 
+    public GameObject selectedSkin;
+
+    private int selectedSkinIdx = 0;
 
     public void CreateRoom()
     {
@@ -33,8 +36,16 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         {
             createErrMsgText.SetText("");
 
+
+            PlayerPrefs.SetInt("skinIndex", selectedSkinIdx);
+            PlayerPrefs.SetInt("skinBool", 0);
+
             RoomOptions options = new RoomOptions();
             options.MaxPlayers = (byte)maxNumofPlayer;
+
+            ExitGames.Client.Photon.Hashtable playerSkin = new ExitGames.Client.Photon.Hashtable();
+            playerSkin.Add("skin", selectedSkinIdx);
+            PhotonNetwork.SetPlayerCustomProperties(playerSkin);
 
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.CreateRoom(createInput.text, options);
@@ -53,7 +64,13 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         }
         else
         {
-            joinErrMsgText.SetText(""); 
+            joinErrMsgText.SetText("");
+
+
+            ExitGames.Client.Photon.Hashtable playerSkin = new ExitGames.Client.Photon.Hashtable();
+            playerSkin.Add("skin", selectedSkinIdx);
+            PhotonNetwork.SetPlayerCustomProperties(playerSkin);
+
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.JoinRoom(joinInput.text);
         }
@@ -90,5 +107,18 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     {
         joinErrMsgText.SetText(message);
     }
-   
+
+    public void NextOption()
+    {
+        Debug.Log(SkinRepo.Count);
+        selectedSkinIdx = (selectedSkinIdx + 1) % SkinRepo.Count;
+        selectedSkin.GetComponent<SpriteRenderer>().sprite = SkinRepo.GetSprite(selectedSkinIdx);
+    }
+
+    public void BackOption()
+    {
+        selectedSkinIdx = (selectedSkinIdx + SkinRepo.Count - 1) % SkinRepo.Count;
+        selectedSkin.GetComponent<SpriteRenderer>().sprite = SkinRepo.GetSprite(selectedSkinIdx);
+    }
+
 }
