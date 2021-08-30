@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Photon.Pun.UtilityScripts;
 
 public class LeaderBroad : MonoBehaviour
 {
@@ -16,27 +17,24 @@ public class LeaderBroad : MonoBehaviour
     void Start()
     {
         AudioController.getInstance().PlaySong(AudioController.GameState.Menu);
-        List<Players> playerList= new List<Players>();
-        int testingScore=1000;
+        List<Players> playerList = new List<Players>();
+
         foreach (var player in PhotonNetwork.PlayerList)
         {
-            player.CustomProperties["score"]=testingScore;
-            testingScore+=1000;
-            Players players = new Players(player.NickName,(int)(player.CustomProperties["score"]));
+            Players players = new Players(player.NickName,(int)(player.GetScore()));
             playerList.Add(players);
         }
-        playerList.Sort((p1, p2) => p2.score-p1.score);
 
-       
-        int placeCount =1;
-        foreach (Players player in playerList)
+        playerList.Sort((p1, p2) => p2.score - p1.score);
+
+        for (int i = 0; i < playerList.Count; i++)
         {
             GameObject rowObject = Instantiate(rowPrefab,rowsParent);
             TMP_Text[] texts = rowObject.GetComponentsInChildren<TMP_Text>();
-            texts[0].text=placeCount.ToString();
-            texts[1].text=player.name;
-            texts[2].text=player.score.ToString();
-            placeCount++;
+            texts[0].text = (i + 1).ToString();
+            texts[1].text = playerList[i].name;
+            texts[2].text = playerList[i].score.ToString();
+            i++;
         }
         
     }
@@ -49,13 +47,15 @@ public class LeaderBroad : MonoBehaviour
     }
   
 }
+
 public class Players
 {
     public string name;
     public int score;
+
     public Players(string name,int score)
     {
-        this.name=name;
-        this.score=score;
+        this.name = name;
+        this.score = score;
     }
 }

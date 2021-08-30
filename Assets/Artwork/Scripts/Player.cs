@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
+
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
@@ -14,6 +15,8 @@ public class Player : MonoBehaviour
 
     private PhotonView view;
     private BoxCollider2D boxCollider;
+    private OnCoinDestroyed onCoinDestroyed;
+    private bool isFrozen = false;
 
     Vector2 movement;
 
@@ -33,6 +36,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void FreezePlayer()
+    {
+        isFrozen = true;
+    }
+
+    public void UnfreezePlayer()
+    {
+        isFrozen = false;
+    }
+
 
     // Update is called once per frame
     void FixedUpdate()
@@ -41,16 +54,19 @@ public class Player : MonoBehaviour
         {
             Vector3 moveDelta = new Vector3(movement.x, movement.y, 0);
 
-            RaycastHit2D hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-            if (hit.collider == null)
+            if (!isFrozen)
             {
-                transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
-            }
+                RaycastHit2D hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(0, moveDelta.y), Mathf.Abs(moveDelta.y * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+                if (hit.collider == null)
+                {
+                    transform.Translate(0, moveDelta.y * Time.deltaTime, 0);
+                }
 
-            hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
-            if (hit.collider == null)
-            {
-                transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+                hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, 0), Mathf.Abs(moveDelta.x * Time.deltaTime), LayerMask.GetMask("Actor", "Blocking"));
+                if (hit.collider == null)
+                {
+                    transform.Translate(moveDelta.x * Time.deltaTime, 0, 0);
+                }
             }
 
             if (movement.x > 0)
@@ -67,10 +83,20 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SetOnCoinDestroyedListener(OnCoinDestroyed onCoinDestroyed)
+    {
+        this.onCoinDestroyed = onCoinDestroyed;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Coin"))
+        GameObject gameObject = collision.gameObject;
+        if (gameObject.CompareTag("Coin"))
         {
+            Coin coin = gameObject.GetComponent<Coin>();
+
+            if (onCoinDestroyed != null)
+                onCoinDestroyed(coin);
             Destroy(collision.gameObject);
         }
     }

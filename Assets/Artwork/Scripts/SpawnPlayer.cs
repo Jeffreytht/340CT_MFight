@@ -14,7 +14,7 @@ public class SpawnPlayer : MonoBehaviour
     public Tilemap tileMap;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
         {
@@ -30,7 +30,10 @@ public class SpawnPlayer : MonoBehaviour
                 }
             }
         }
+    }
 
+    public GameObject SpawnNewPlayer()
+    { 
         int localX = PhotonNetwork.IsMasterClient ? minX : maxX;
         int localY = minY;
 
@@ -41,6 +44,6 @@ public class SpawnPlayer : MonoBehaviour
         float y = (bl.y + tr.y) / 2;
 
         string name = SkinRepo.GetObject((int)(PhotonNetwork.LocalPlayer.CustomProperties["skin"])).name;
-        PhotonNetwork.Instantiate(name, new Vector2(x, y), Quaternion.identity);
+        return PhotonNetwork.Instantiate(name, new Vector2(x, y), Quaternion.identity);
     }
 }

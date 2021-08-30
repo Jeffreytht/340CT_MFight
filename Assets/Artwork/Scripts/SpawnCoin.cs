@@ -62,25 +62,25 @@ public class SpawnCoin : MonoBehaviour
                 Vector3 tr = tileMap.CellToWorld(new Vector3Int(x + 1, y + 1, (int)tileMap.transform.position.y));
 
                 Vector2 pos = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
-                GameObject obj = PhotonNetwork.Instantiate(coinPrefab.name, pos, Quaternion.identity);
+                GameObject obj = PhotonNetwork.InstantiateRoomObject(coinPrefab.name, pos, Quaternion.identity);
 
                 Coin.Operator op = Coin.Operator.Addition;
                 int operand = 1;
 
                 if (i > 0 && i %5 == 0)
                 {
-                    op = Random.Range(0, 1) == 0 ? Coin.Operator.Multiplication : Coin.Operator.Division;
-                    operand = Random.Range(2, 5);
+                    op = Random.Range(0, 2) == 0 ? Coin.Operator.Multiplication : Coin.Operator.Division;
+                    operand = Random.Range(2, 4);
                 }
                 else
                 {
-                    op = Random.Range(0, 1) == 0 ? Coin.Operator.Addition : Coin.Operator.Subtraction;
-                    operand = Random.Range(1, 99);
+                    op = Random.Range(0, 2) == 0 ? Coin.Operator.Addition : Coin.Operator.Subtraction;
+                    operand = Random.Range(1, 100);
                 }
 
-                obj.GetComponent<Coin>().SetValue(op, operand);
+                PhotonView photonView = PhotonView.Get(obj.GetComponent<Coin>());
+                photonView.RPC("SetValue", RpcTarget.All, op, operand);
             }
         }
     }
-
 }
