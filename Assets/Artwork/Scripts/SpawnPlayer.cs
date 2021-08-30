@@ -12,9 +12,6 @@ public class SpawnPlayer : MonoBehaviour
     private int minY = int.MaxValue;
     private int maxY = int.MinValue;
     public Tilemap tileMap;
-    public GameObject playerPrefab  ;
-
-    public List<GameObject> skins = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
