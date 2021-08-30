@@ -18,14 +18,9 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
     public TextMeshProUGUI joinErrMsgText;
     public Vibration vibration;
     public int maxNumofPlayer = 2;
+    public GameObject selectedSkin;
 
-    public SpriteRenderer sr;
-    public List<Sprite> skins = new List<Sprite>();
-    private int selectedSkin = 0;
-    public GameObject playerskin;
-
-
-
+    private int selectedSkinIdx = 0;
 
     public void CreateRoom()
     {
@@ -42,11 +37,15 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
             createErrMsgText.SetText("");
 
 
-            PlayerPrefs.SetInt("skinIndex", selectedSkin);
+            PlayerPrefs.SetInt("skinIndex", selectedSkinIdx);
             PlayerPrefs.SetInt("skinBool", 0);
 
             RoomOptions options = new RoomOptions();
             options.MaxPlayers = (byte)maxNumofPlayer;
+
+            ExitGames.Client.Photon.Hashtable playerSkin = new ExitGames.Client.Photon.Hashtable();
+            playerSkin.Add("skin", selectedSkinIdx);
+            PhotonNetwork.SetPlayerCustomProperties(playerSkin);
 
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.CreateRoom(createInput.text, options);
@@ -68,8 +67,9 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
             joinErrMsgText.SetText("");
 
 
-            PlayerPrefs.SetInt("skinIndex2", selectedSkin);
-            PlayerPrefs.SetInt("skinBool2", 0);
+            ExitGames.Client.Photon.Hashtable playerSkin = new ExitGames.Client.Photon.Hashtable();
+            playerSkin.Add("skin", selectedSkinIdx);
+            PhotonNetwork.SetPlayerCustomProperties(playerSkin);
 
             PhotonNetwork.NickName = nameInput.text.Trim();
             PhotonNetwork.JoinRoom(joinInput.text);
@@ -110,36 +110,15 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
 
     public void NextOption()
     {
-
-        selectedSkin = selectedSkin + 1;
-
-        if (selectedSkin == skins.Count)
-        {
-
-            selectedSkin = 0;
-
-        }
-
-        sr.sprite = skins[selectedSkin];
-
-
+        Debug.Log(SkinRepo.Count);
+        selectedSkinIdx = (selectedSkinIdx + 1) % SkinRepo.Count;
+        selectedSkin.GetComponent<SpriteRenderer>().sprite = SkinRepo.GetSprite(selectedSkinIdx);
     }
 
     public void BackOption()
     {
-
-        selectedSkin = selectedSkin - 1;
-
-        if (selectedSkin < 0)
-        {
-
-            selectedSkin = skins.Count - 1;
-
-        }
-
-        sr.sprite = skins[selectedSkin];
-
-
+        selectedSkinIdx = (selectedSkinIdx + SkinRepo.Count - 1) % SkinRepo.Count;
+        selectedSkin.GetComponent<SpriteRenderer>().sprite = SkinRepo.GetSprite(selectedSkinIdx);
     }
 
 }
