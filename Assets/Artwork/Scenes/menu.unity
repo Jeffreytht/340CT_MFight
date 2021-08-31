@@ -1407,6 +1407,8 @@ MonoBehaviour:
   playerObjs:
   - {fileID: 2995339536345409755, guid: d511530e241e34092a3c99357af03ff1, type: 3}
   - {fileID: 2995339536345409755, guid: 5640256deedc443d186a38ddf070d602, type: 3}
+  - {fileID: 5484242869645654009, guid: 784035c9795cc744a9651207433dfa32, type: 3}
+  - {fileID: 5484242869645654009, guid: 2fdfe57f3c092f54da0593f6f5756048, type: 3}
 --- !u!4 &963264778
 Transform:
   m_ObjectHideFlags: 0
