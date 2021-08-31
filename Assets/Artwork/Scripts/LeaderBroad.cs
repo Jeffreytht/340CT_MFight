@@ -20,10 +20,18 @@ public class LeaderBroad : MonoBehaviour
         List<Players> playerList = new List<Players>();
 
     
-        foreach (var player in PhotonNetwork.PlayerList)
+        // foreach (var player in PhotonNetwork.PlayerList)
+        // {
+        //     Players players = new Players(player.NickName,(int)(player.GetScore()));
+        //     Debug.Log(player.NickName+"(PL):"+player.GetScore());
+        //     playerList.Add(players);
+        // }
+        for(int i=0;i<2;i++)
         {
-            Players players = new Players(player.NickName,(int)(player.GetScore()));
-            Debug.Log(player.NickName+"(PL):"+player.GetScore());
+            String NameKey = i+"Name";
+            String ScoreKey = i+"Score";
+
+            Players players = new Players(PlayerPrefs.GetString(NameKey),PlayerPrefs.GetInt(ScoreKey));
             playerList.Add(players);
         }
 
