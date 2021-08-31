@@ -68,10 +68,10 @@ public class ScoreController : MonoBehaviour
                 player2.Score = player.GetScore();
         }
 
-        PlayerPrefs.SetString("0"+"Name",player1.Name);
-        PlayerPrefs.SetInt("0"+"Score",player1.Score);
-        PlayerPrefs.SetString("1"+"Name",player2.Name);
-        PlayerPrefs.SetInt("1"+"Score",player2.Score);
+        // PlayerPrefs.SetString("0"+"Name",player1.Name);
+        // PlayerPrefs.SetInt("0"+"Score",player1.Score);
+        // PlayerPrefs.SetString("1"+"Name",player2.Name);
+        // PlayerPrefs.SetInt("1"+"Score",player2.Score);
         SetScore(p1Score, player1.Score);
         SetScore(p2Score, player2.Score);
     }

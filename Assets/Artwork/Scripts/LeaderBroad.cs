@@ -20,20 +20,27 @@ public class LeaderBroad : MonoBehaviour
         List<Players> playerList = new List<Players>();
 
     
-        // foreach (var player in PhotonNetwork.PlayerList)
-        // {
-        //     Players players = new Players(player.NickName,(int)(player.GetScore()));
-        //     Debug.Log(player.NickName+"(PL):"+player.GetScore());
-        //     playerList.Add(players);
-        // }
-        for(int i=0;i<2;i++)
+        foreach (var player in PhotonNetwork.PlayerList)
         {
-            String NameKey = i+"Name";
-            String ScoreKey = i+"Score";
-
-            Players players = new Players(PlayerPrefs.GetString(NameKey),PlayerPrefs.GetInt(ScoreKey));
+            Players players = new Players(player.NickName,(int)(player.GetScore()));
+            Debug.Log(player.NickName+"(PL):"+player.GetScore());
             playerList.Add(players);
         }
+        foreach (var player in PhotonNetwork.PlayerListOthers)
+        {
+            Players players = new Players(player.NickName,(int)(player.GetScore()));
+            Debug.Log(player.NickName+"(PLO):"+player.GetScore());
+            playerList.Add(players);
+        }
+
+        // for(int i=0;i<2;i++)
+        // {
+        //     String NameKey = i+"Name";
+        //     String ScoreKey = i+"Score";
+
+        //     Players players = new Players(PlayerPrefs.GetString(NameKey),PlayerPrefs.GetInt(ScoreKey));
+        //     playerList.Add(players);
+        // }
 
         playerList.Sort((p1, p2) => p2.score - p1.score);
 
