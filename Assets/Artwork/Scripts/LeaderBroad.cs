@@ -19,9 +19,11 @@ public class LeaderBroad : MonoBehaviour
         AudioController.getInstance().PlaySong(AudioController.GameState.Menu);
         List<Players> playerList = new List<Players>();
 
+    
         foreach (var player in PhotonNetwork.PlayerList)
         {
             Players players = new Players(player.NickName,(int)(player.GetScore()));
+            Debug.Log(player.NickName+"(PL):"+player.GetScore());
             playerList.Add(players);
         }
 
@@ -34,15 +36,14 @@ public class LeaderBroad : MonoBehaviour
             texts[0].text = (i + 1).ToString();
             texts[1].text = playerList[i].name;
             texts[2].text = playerList[i].score.ToString();
-            i++;
         }
+        
         
     }
 
     // Update is called once per frame
     public void backToLobby()
     {
-        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("lobby");
     }
   

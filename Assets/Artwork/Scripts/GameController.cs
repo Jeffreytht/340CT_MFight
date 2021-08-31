@@ -82,8 +82,10 @@ public class GameController : MonoBehaviour
 
         countdownText.gameObject.SetActive(true);
         countdownText.text = "Time Up";
+       
 
         new WaitForSeconds(3);
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("leaderbroad");
     }
 

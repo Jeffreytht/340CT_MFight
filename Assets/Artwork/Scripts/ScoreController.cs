@@ -67,7 +67,7 @@ public class ScoreController : MonoBehaviour
             else
                 player2.Score = player.GetScore();
         }
-
+    
         SetScore(p1Score, player1.Score);
         SetScore(p2Score, player2.Score);
     }
