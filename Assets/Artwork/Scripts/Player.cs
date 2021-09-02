@@ -9,8 +9,6 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
-    public Rigidbody2D rb;
-
     public TMP_Text playerName;
 
     private PhotonView view;
