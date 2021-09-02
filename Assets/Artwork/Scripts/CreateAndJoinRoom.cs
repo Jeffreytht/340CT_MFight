@@ -84,7 +84,7 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
   
     public override void OnJoinedRoom()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             PhotonNetwork.LoadLevel("game");
         else
             PhotonNetwork.LoadLevel("waitingOpponent");

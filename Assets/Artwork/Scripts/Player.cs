@@ -100,4 +100,14 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            transform.position = transform.position + new Vector3(0.946f, -0.633f, 0);
+            ;
+        }
+    }
 }
