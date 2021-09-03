@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     private OnCoinDestroyed onCoinDestroyed;
     private bool isFrozen = false;
+
+
+    private int minX = int.MaxValue;
+    private int minY = int.MaxValue;
+    public Tilemap tileMap;
 
     Vector2 movement;
 
@@ -96,6 +102,15 @@ public class Player : MonoBehaviour
             if (onCoinDestroyed != null)
                 onCoinDestroyed(coin);
             Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="Enemy")
+        {
+           
+            transform.position = new Vector3(0.004f, -0.624f,0);
         }
     }
 }
