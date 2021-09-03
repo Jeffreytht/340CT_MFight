@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
-using UnityEngine.Tilemaps;
-
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
@@ -17,10 +15,8 @@ public class Player : MonoBehaviour
     private OnCoinDestroyed onCoinDestroyed;
     private bool isFrozen = false;
 
-
-    private int minX = int.MaxValue;
-    private int minY = int.MaxValue;
-    public Tilemap tileMap;
+    private float minX = 0.004f;
+    private float minY = -0.624f;
 
     Vector2 movement;
 
@@ -110,7 +106,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag=="Enemy")
         {
            
-            transform.position = new Vector3(0.004f, -0.624f,0);
+            transform.position = new Vector3(minX, minY, 0);
         }
     }
 }

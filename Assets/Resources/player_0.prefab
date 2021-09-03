@@ -128,7 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   playerName: {fileID: 540447692865739477}
-  tileMap: {fileID: 0}
 --- !u!114 &2995339536345409764
 MonoBehaviour:
   m_ObjectHideFlags: 0
