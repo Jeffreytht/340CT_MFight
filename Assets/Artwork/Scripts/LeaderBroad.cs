@@ -30,11 +30,18 @@ public class LeaderBroad : MonoBehaviour
 
         playerList.Sort((p1, p2) => p2.score - p1.score);
 
-        for (int i = 0; i < playerList.Count; i++)
+        for (int i = 0,j = 1; i < playerList.Count; i++)
         {
             GameObject rowObject = Instantiate(rowPrefab,rowsParent);
             TMP_Text[] texts = rowObject.GetComponentsInChildren<TMP_Text>();
-            texts[0].text = (i + 1).ToString();
+            if(i>0)
+            {
+                if(playerList[i].score!=playerList[i-1].score)
+                {
+                    j++;
+                }
+            }
+            texts[0].text = (j).ToString();
             texts[1].text = playerList[i].name;
             texts[2].text = playerList[i].score.ToString();
         }
