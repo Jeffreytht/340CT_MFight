@@ -8,7 +8,6 @@ public class MathDialog : MonoBehaviour
     public TextMeshProUGUI ansLeft;
     public TextMeshProUGUI ansRight;
     public TextMeshProUGUI question;
-    public static bool isActive;
 
     private int correctAnsIdx;
     private int correctAns;
@@ -57,13 +56,11 @@ public class MathDialog : MonoBehaviour
 
     public void Exec()
     {
-        isActive = true;
         GetComponent<Canvas>().enabled = true;
     }
 
     public void Close()
     {
-        isActive = false;
         GetComponent<Canvas>().enabled = false;
     }
 

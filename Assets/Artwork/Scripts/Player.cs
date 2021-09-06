@@ -13,11 +13,9 @@ public class Player : MonoBehaviour
     private PhotonView view;
     private BoxCollider2D boxCollider;
     private OnCoinDestroyed onCoinDestroyed;
+    private OnPlayerHitByEnemy onPlayerHitByEnemy;
     private bool isFrozen = false;
-    private bool isImmune;
-
-    private float minX = 0.004f;
-    private float minY = -0.624f;
+    private bool isImmune = false;
 
     Vector2 movement;
 
@@ -45,6 +43,16 @@ public class Player : MonoBehaviour
     public void UnfreezePlayer()
     {
         isFrozen = false;
+    }
+
+    public void ImmunePlayer()
+    {
+        isImmune = true;
+    }
+
+    public void UnimmunePlayer()
+    {
+        isImmune = false;
     }
 
 
@@ -89,6 +97,11 @@ public class Player : MonoBehaviour
         this.onCoinDestroyed = onCoinDestroyed;
     }
 
+    public void SetOnPlayerHitByEnemy(OnPlayerHitByEnemy onPlayerHitByEnemy)
+    {
+        this.onPlayerHitByEnemy = onPlayerHitByEnemy;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject gameObject = collision.gameObject;
@@ -104,11 +117,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        isImmune = MathDialog.isActive;
-        if (collision.gameObject.tag=="Enemy"&& isImmune==false)
+        if (collision.gameObject.tag == "Enemy" && isImmune == false)
         {
-            transform.position = new Vector3(minX, minY, 0);
+            if (onPlayerHitByEnemy != null)
+                onPlayerHitByEnemy(this);
         }
     }
 }
