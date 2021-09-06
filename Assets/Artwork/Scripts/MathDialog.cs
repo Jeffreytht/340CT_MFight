@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MathDialog : MonoBehaviour
@@ -8,11 +9,15 @@ public class MathDialog : MonoBehaviour
     public TextMeshProUGUI ansLeft;
     public TextMeshProUGUI ansRight;
     public TextMeshProUGUI question;
+    public TextMeshProUGUI timerText;
+    public Slider slider;
+    public int timeToAnswer = 12;
 
     private int correctAnsIdx;
     private int correctAns;
     private int score;
     private bool isPenalty;
+    private IEnumerator timer;
 
     private OnPlayerScoreChanged OnPlayerScoreChanged;
 
@@ -34,6 +39,7 @@ public class MathDialog : MonoBehaviour
                 break;
             case Coin.Operator.Division:
                 correctAns = score / operand;
+                score = correctAns * operand;
                 break;
         }
 
@@ -57,11 +63,28 @@ public class MathDialog : MonoBehaviour
     public void Exec()
     {
         GetComponent<Canvas>().enabled = true;
+        timer = StartTimer();
+        StartCoroutine(timer);
+    }
+
+    IEnumerator StartTimer()
+    {
+        for (float i = timeToAnswer; i > 0; i -= 0.1f)
+        {
+            timerText.SetText(((int)i).ToString() + " sec");
+            slider.value = i / timeToAnswer;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        OnPlayerScoreChanged(isPenalty, score);
+        Close();
     }
 
     public void Close()
     {
         GetComponent<Canvas>().enabled = false;
+        if (timer != null)
+            StopCoroutine(timer);
     }
 
 

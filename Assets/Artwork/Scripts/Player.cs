@@ -111,7 +111,9 @@ public class Player : MonoBehaviour
 
             if (onCoinDestroyed != null)
                 onCoinDestroyed(coin);
-            Destroy(collision.gameObject);
+
+            PhotonView photonView = PhotonView.Get(coin.GetComponent<Coin>());
+            photonView.RPC("DestroyCoin", RpcTarget.All);
         }
     }
 

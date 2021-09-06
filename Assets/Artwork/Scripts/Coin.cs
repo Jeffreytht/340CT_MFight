@@ -61,4 +61,10 @@ public class Coin : MonoBehaviour
     {
         return _operator == Operator.Division || _operator == Operator.Subtraction;
     }
+
+    [PunRPC]
+    public void DestroyCoin()
+    {
+        Destroy(gameObject);
+    }
 }

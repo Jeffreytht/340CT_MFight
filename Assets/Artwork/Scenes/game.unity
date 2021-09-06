@@ -2044,7 +2044,7 @@ GameObject:
   - component: {fileID: 299026530}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3711,6 +3711,9 @@ MonoBehaviour:
   ansLeft: {fileID: 137416739}
   ansRight: {fileID: 1618188552}
   question: {fileID: 255697018}
+  timerText: {fileID: 1839649544}
+  slider: {fileID: 1110228224}
+  timeToAnswer: 12
 --- !u!1 &387066102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 498449672386839216, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
@@ -5741,6 +5744,7 @@ GameObject:
   m_Component:
   - component: {fileID: 912504694}
   - component: {fileID: 912504693}
+  - component: {fileID: 912504695}
   m_Layer: 0
   m_Name: TilemapController
   m_TagString: Untagged
@@ -5760,7 +5764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464c3da981dee438ea765a0075af92d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileMap: {fileID: 299026531}
+  floorTilemap: {fileID: 299026531}
+  wallTilemap: {fileID: 248637518}
 --- !u!4 &912504694
 Transform:
   m_ObjectHideFlags: 0
@@ -5775,6 +5780,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &912504695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 912504692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &921073645
 GameObject:
   m_ObjectHideFlags: 0
@@ -6208,7 +6235,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.796
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7217,7 +7244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownTime: 3
-  gameTime: 20
+  gameTime: 60
   countdownText: {fileID: 921073646}
   timerText: {fileID: 709147049}
   coinGenerator: {fileID: 1629647953}
@@ -7765,7 +7792,7 @@ GameObject:
   - component: {fileID: 1839649545}
   - component: {fileID: 1839649544}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: timerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

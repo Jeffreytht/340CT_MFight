@@ -33,19 +33,28 @@ public class SpawnCoin : MonoBehaviour
             if (isSpawnCoinEnable)
             {
                 List<int> tlbr = tileMapController.GetLocalTLBR();
-                int x = Random.Range(tlbr[1], tlbr[3]);
-                int y = Random.Range(tlbr[2], tlbr[0]);
+                int x = 0; 
+                int y = 0;
 
-                List<float> bl = tileMapController.LocalToWorld(x, y);
-                List<float> tr = tileMapController.LocalToWorld(x + 1, y + 1);
+                do
+                {
+                    x = Random.Range(tlbr[1], tlbr[3]);
+                    y = Random.Range(tlbr[2], tlbr[0]);
+                } while (!tileMapController.AllocateIfCellAvailable(x, y));
 
-                Vector2 pos = new Vector2((bl[0] + tr[0]) / 2, (bl[1] + tr[1]) / 2);
+                PhotonView tilemapView = PhotonView.Get(tileMapController.GetComponent<TilemapController>());
+                tilemapView.RPC("AllocateIfCellAvailable", RpcTarget.All, x, y);
+
+                Vector3 bl = tileMapController.FloorCellToWorld(x, y);
+                Vector3 tr = tileMapController.FloorCellToWorld(x + 1, y + 1);
+
+                Vector2 pos = new Vector2((bl.x + tr.x) / 2, (bl.y + tr.y) / 2);
                 GameObject obj = PhotonNetwork.InstantiateRoomObject(coinPrefab.name, pos, Quaternion.identity);
 
                 Coin.Operator op = Coin.Operator.Addition;
                 int operand = 1;
 
-                if (i > 0 && i %5 == 0)
+                if (i > 0 && i % 5 == 0)
                 {
                     op = Random.Range(0, 2) == 0 ? Coin.Operator.Multiplication : Coin.Operator.Division;
                     operand = Random.Range(2, 4);
@@ -56,8 +65,8 @@ public class SpawnCoin : MonoBehaviour
                     operand = Random.Range(1, 100);
                 }
 
-                PhotonView photonView = PhotonView.Get(obj.GetComponent<Coin>());
-                photonView.RPC("SetValue", RpcTarget.All, op, operand);
+                PhotonView coinView = PhotonView.Get(obj.GetComponent<Coin>());
+                coinView.RPC("SetValue", RpcTarget.All, op, operand);
             }
         }
     }
