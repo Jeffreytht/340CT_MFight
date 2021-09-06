@@ -3711,6 +3711,9 @@ MonoBehaviour:
   ansLeft: {fileID: 137416739}
   ansRight: {fileID: 1618188552}
   question: {fileID: 255697018}
+  timerText: {fileID: 1839649544}
+  slider: {fileID: 1110228224}
+  timeToAnswer: 12
 --- !u!1 &387066102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 498449672386839216, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
@@ -6232,7 +6235,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.796
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7785,7 +7788,7 @@ GameObject:
   - component: {fileID: 1839649545}
   - component: {fileID: 1839649544}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: timerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

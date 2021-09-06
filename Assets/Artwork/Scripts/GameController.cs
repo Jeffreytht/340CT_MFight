@@ -149,6 +149,7 @@ public class GameController : MonoBehaviour
 
         PhotonView photonView = PhotonView.Get(tilemapController.GetComponent<TilemapController>());
         photonView.RPC("FreeFloorCell", RpcTarget.All, collectedCoinX, collectedCoinY);
+
         playerObj.GetComponent<Player>().UnimmunePlayer();
         playerObj.GetComponent<Player>().UnfreezePlayer();
     }
