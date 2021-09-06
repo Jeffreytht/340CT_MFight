@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     private OnCoinDestroyed onCoinDestroyed;
     private bool isFrozen = false;
+    private bool isImmune;
 
     private float minX = 0.004f;
     private float minY = -0.624f;
@@ -103,9 +104,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag=="Enemy")
+
+        isImmune = MathDialog.isActive;
+        if (collision.gameObject.tag=="Enemy"&& isImmune==false)
         {
-           
             transform.position = new Vector3(minX, minY, 0);
         }
     }
