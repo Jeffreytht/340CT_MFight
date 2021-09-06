@@ -26,6 +26,9 @@ public class GameController : MonoBehaviour
     private MathDialog mathDialog;
     private GameObject playerObj;
 
+    private int collectedCoinX = 0;
+    private int collectedCoinY = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,22 +40,24 @@ public class GameController : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            List<float> bl = tilemapController.LocalToWorld(tlbr[3], tlbr[2]);
-            List<float> tr = tilemapController.LocalToWorld(tlbr[3] + 1, tlbr[2] + 1);
-            x = (bl[0] + tr[0]) / 2;
-            y = (bl[1] + tr[1]) / 2;
-        } else
+            Vector3 bl = tilemapController.FloorCellToWorld(tlbr[1], tlbr[2]);
+            Vector3 tr = tilemapController.FloorCellToWorld(tlbr[1] + 1, tlbr[2] + 1);
+            x = (bl.x + tr.x) / 2;
+            y = (bl.y + tr.y) / 2;
+        }
+        else
         {
-            List<float> bl = tilemapController.LocalToWorld(tlbr[1], tlbr[2]);
-            List<float> tr = tilemapController.LocalToWorld(tlbr[1] + 1, tlbr[2] + 1);
-            x = (bl[0] + tr[0]) / 2;
-            y = (bl[1] + tr[1]) / 2;
+            Vector3 bl = tilemapController.FloorCellToWorld(tlbr[3], tlbr[2]);
+            Vector3 tr = tilemapController.FloorCellToWorld(tlbr[3] + 1, tlbr[2] + 1);
+            x = (bl.x + tr.x) / 2;
+            y = (bl.y + tr.y) / 2;
         }
 
         playerObj = playerGenerator.SpawnNewPlayer(x, y);
         Player player = playerObj.GetComponent<Player>();
 
         PhotonNetwork.LocalPlayer.SetScore(5);
+        player.FreezePlayer();
         scoreController.GetComponent<ScoreController>().Init();
 
         OnCoinDestroyed coinDestroyedListener = CoinDestroyedListener;
@@ -83,6 +88,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         countdownText.gameObject.SetActive(false);
+        playerObj.GetComponent<Player>().UnfreezePlayer();
         StartCoroutine(StartGame());
     }
 
@@ -120,6 +126,10 @@ public class GameController : MonoBehaviour
 
     public void CoinDestroyedListener(Coin coin)
     {
+        Vector3Int floorCell = tilemapController.WorldToFloorCell(coin.transform.position.x, coin.transform.position.y);
+        collectedCoinX = floorCell.x;
+        collectedCoinY = floorCell.y;
+
         playerObj.GetComponent<Player>().FreezePlayer();
         if (coin.IsPenalty())
             mathDialog.SetQuestion(PhotonNetwork.PlayerListOthers[0].GetScore(), coin.Op, coin.Operand, coin.IsPenalty());
@@ -137,6 +147,8 @@ public class GameController : MonoBehaviour
         else
             PhotonNetwork.LocalPlayer.SetScore(score);
 
+        PhotonView photonView = PhotonView.Get(tilemapController.GetComponent<TilemapController>());
+        photonView.RPC("FreeFloorCell", RpcTarget.All, collectedCoinX, collectedCoinY);
         playerObj.GetComponent<Player>().UnimmunePlayer();
         playerObj.GetComponent<Player>().UnfreezePlayer();
     }
@@ -148,17 +160,17 @@ public class GameController : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            List<float> bl = tilemapController.LocalToWorld(tlbr[3], tlbr[2]);
-            List<float> tr = tilemapController.LocalToWorld(tlbr[3] + 1, tlbr[2] + 1);
-            x = (bl[0] + tr[0]) / 2;
-            y = (bl[1] + tr[1]) / 2;
+            Vector3 bl = tilemapController.FloorCellToWorld(tlbr[1], tlbr[2]);
+            Vector3 tr = tilemapController.FloorCellToWorld(tlbr[1] + 1, tlbr[2] + 1);
+            x = (bl.x + tr.x) / 2;
+            y = (bl.y + tr.y) / 2;
         }
         else
         {
-            List<float> bl = tilemapController.LocalToWorld(tlbr[1], tlbr[2]);
-            List<float> tr = tilemapController.LocalToWorld(tlbr[1] + 1, tlbr[2] + 1);
-            x = (bl[0] + tr[0]) / 2;
-            y = (bl[1] + tr[1]) / 2;
+            Vector3 bl = tilemapController.FloorCellToWorld(tlbr[3], tlbr[2]);
+            Vector3 tr = tilemapController.FloorCellToWorld(tlbr[3] + 1, tlbr[2] + 1);
+            x = (bl.x + tr.x) / 2;
+            y = (bl.y + tr.y) / 2;
         }
 
         player.transform.position = new Vector2(x, y);
