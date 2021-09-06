@@ -67,7 +67,7 @@ TextureImporter:
     second: coin_4
   - first:
       213: -4009484236193042015
-    second: wall_t_2
+    second: enemy
   - first:
       213: -1365570959514419066
     second: coin_2
@@ -659,6 +659,27 @@ TextureImporter:
       bones: []
       spriteID: 46206603f2bc8c700800000000000000
       internalID: 560921557143519844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 160
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a17f2194537b58c0800000000000000
+      internalID: -4009484236193042015
       vertices: []
       indices: 
       edges: []

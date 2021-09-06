@@ -7164,6 +7164,10 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1732964786526435705, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4009484236193042015, guid: 191a438f7a58e4956b192bb34cb68543, type: 3}
     - target: {fileID: 8359653655292213866, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -8419,6 +8423,10 @@ PrefabInstance:
       propertyPath: m_FlipY
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1732964786526435705, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4009484236193042015, guid: 191a438f7a58e4956b192bb34cb68543, type: 3}
     - target: {fileID: 4783481093601024825, guid: 6d106375b86fee342817ab05e38879a4, type: 3}
       propertyPath: m_Constraints
       value: 4
