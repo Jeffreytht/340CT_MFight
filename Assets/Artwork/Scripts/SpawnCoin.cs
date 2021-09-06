@@ -54,7 +54,7 @@ public class SpawnCoin : MonoBehaviour
                 Coin.Operator op = Coin.Operator.Addition;
                 int operand = 1;
 
-                if (i > 0 && i %5 == 0)
+                if (i > 0 && i % 5 == 0)
                 {
                     op = Random.Range(0, 2) == 0 ? Coin.Operator.Multiplication : Coin.Operator.Division;
                     operand = Random.Range(2, 4);

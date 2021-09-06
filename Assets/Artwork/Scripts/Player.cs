@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
             if (onCoinDestroyed != null)
                 onCoinDestroyed(coin);
 
-            Debug.Log(coin.GetComponent<Coin>() == null);
             PhotonView photonView = PhotonView.Get(coin.GetComponent<Coin>());
             photonView.RPC("DestroyCoin", RpcTarget.All);
         }

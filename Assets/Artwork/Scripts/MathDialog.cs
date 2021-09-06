@@ -34,6 +34,7 @@ public class MathDialog : MonoBehaviour
                 break;
             case Coin.Operator.Division:
                 correctAns = score / operand;
+                score = correctAns * operand;
                 break;
         }
 
