@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  rb: {fileID: 0}
   playerName: {fileID: 540447692865739477}
 --- !u!114 &2995339536345409764
 MonoBehaviour:

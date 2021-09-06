@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
-
 public class Player : MonoBehaviour
 {
     public float moveSpeed = 1f;
@@ -14,7 +13,9 @@ public class Player : MonoBehaviour
     private PhotonView view;
     private BoxCollider2D boxCollider;
     private OnCoinDestroyed onCoinDestroyed;
+    private OnPlayerHitByEnemy onPlayerHitByEnemy;
     private bool isFrozen = false;
+    private bool isImmune = false;
 
     Vector2 movement;
 
@@ -42,6 +43,16 @@ public class Player : MonoBehaviour
     public void UnfreezePlayer()
     {
         isFrozen = false;
+    }
+
+    public void ImmunePlayer()
+    {
+        isImmune = true;
+    }
+
+    public void UnimmunePlayer()
+    {
+        isImmune = false;
     }
 
 
@@ -86,6 +97,11 @@ public class Player : MonoBehaviour
         this.onCoinDestroyed = onCoinDestroyed;
     }
 
+    public void SetOnPlayerHitByEnemy(OnPlayerHitByEnemy onPlayerHitByEnemy)
+    {
+        this.onPlayerHitByEnemy = onPlayerHitByEnemy;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject gameObject = collision.gameObject;
@@ -96,6 +112,15 @@ public class Player : MonoBehaviour
             if (onCoinDestroyed != null)
                 onCoinDestroyed(coin);
             Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" && isImmune == false)
+        {
+            if (onPlayerHitByEnemy != null)
+                onPlayerHitByEnemy(this);
         }
     }
 }

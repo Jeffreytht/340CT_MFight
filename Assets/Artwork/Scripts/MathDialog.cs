@@ -13,6 +13,7 @@ public class MathDialog : MonoBehaviour
     private int correctAns;
     private int score;
     private bool isPenalty;
+
     private OnPlayerScoreChanged OnPlayerScoreChanged;
 
     public void SetQuestion(int score, Coin.Operator op, int operand, bool isPenalty)

@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -8,6 +8,7 @@ using Photon.Pun;
 
 public delegate void OnCoinDestroyed(Coin coin);
 public delegate void OnPlayerScoreChanged(bool deduct, int score);
+public delegate void OnPlayerHitByEnemy(Player player);
 
 public class GameController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameController : MonoBehaviour
     public SpawnPlayer playerGenerator;
     public Canvas mathDialogCanvas;
     public GameObject scoreController;
+    public TilemapController tilemapController;
 
     private MathDialog mathDialog;
     private GameObject playerObj;
@@ -30,7 +32,24 @@ public class GameController : MonoBehaviour
         mathDialog = mathDialogCanvas.GetComponent<MathDialog>();
         mathDialog.Close();
 
-        playerObj = playerGenerator.SpawnNewPlayer();
+        List<int> tlbr = tilemapController.GetLocalTLBR();
+        float x, y;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            List<float> bl = tilemapController.LocalToWorld(tlbr[3], tlbr[2]);
+            List<float> tr = tilemapController.LocalToWorld(tlbr[3] + 1, tlbr[2] + 1);
+            x = (bl[0] + tr[0]) / 2;
+            y = (bl[1] + tr[1]) / 2;
+        } else
+        {
+            List<float> bl = tilemapController.LocalToWorld(tlbr[1], tlbr[2]);
+            List<float> tr = tilemapController.LocalToWorld(tlbr[1] + 1, tlbr[2] + 1);
+            x = (bl[0] + tr[0]) / 2;
+            y = (bl[1] + tr[1]) / 2;
+        }
+
+        playerObj = playerGenerator.SpawnNewPlayer(x, y);
         Player player = playerObj.GetComponent<Player>();
 
         PhotonNetwork.LocalPlayer.SetScore(5);
@@ -38,6 +57,9 @@ public class GameController : MonoBehaviour
 
         OnCoinDestroyed coinDestroyedListener = CoinDestroyedListener;
         player.SetOnCoinDestroyedListener(coinDestroyedListener);
+
+        OnPlayerHitByEnemy playerHitByEnemyListener = PlayerHitByEnemyListener;
+        player.SetOnPlayerHitByEnemy(playerHitByEnemyListener);
 
         OnPlayerScoreChanged onPlayerScoreChangedListener = PlayerScoreChangedListener;
         mathDialog.SetOnPlayerScoreChangedListener(onPlayerScoreChangedListener);
@@ -104,6 +126,7 @@ public class GameController : MonoBehaviour
         else
             mathDialog.SetQuestion(PhotonNetwork.LocalPlayer.GetScore(), coin.Op, coin.Operand, coin.IsPenalty());
 
+        playerObj.GetComponent<Player>().ImmunePlayer();
         mathDialog.Exec();
     }
 
@@ -114,7 +137,31 @@ public class GameController : MonoBehaviour
         else
             PhotonNetwork.LocalPlayer.SetScore(score);
 
+        playerObj.GetComponent<Player>().UnimmunePlayer();
         playerObj.GetComponent<Player>().UnfreezePlayer();
+    }
+
+    public void PlayerHitByEnemyListener(Player player)
+    {
+        List<int> tlbr = tilemapController.GetLocalTLBR();
+        float x, y;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            List<float> bl = tilemapController.LocalToWorld(tlbr[3], tlbr[2]);
+            List<float> tr = tilemapController.LocalToWorld(tlbr[3] + 1, tlbr[2] + 1);
+            x = (bl[0] + tr[0]) / 2;
+            y = (bl[1] + tr[1]) / 2;
+        }
+        else
+        {
+            List<float> bl = tilemapController.LocalToWorld(tlbr[1], tlbr[2]);
+            List<float> tr = tilemapController.LocalToWorld(tlbr[1] + 1, tlbr[2] + 1);
+            x = (bl[0] + tr[0]) / 2;
+            y = (bl[1] + tr[1]) / 2;
+        }
+
+        player.transform.position = new Vector2(x, y);
     }
 
 }
