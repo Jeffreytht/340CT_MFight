@@ -3712,6 +3712,8 @@ MonoBehaviour:
   ansRight: {fileID: 1618188552}
   question: {fileID: 255697018}
   timerText: {fileID: 1839649544}
+  leftButton: {fileID: 1264519961}
+  rightButton: {fileID: 1510795926}
   slider: {fileID: 1110228224}
   timeToAnswer: 12
 --- !u!1 &387066102 stripped
@@ -6844,7 +6846,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

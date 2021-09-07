@@ -107,6 +107,10 @@ public class Player : MonoBehaviour
         GameObject gameObject = collision.gameObject;
         if (gameObject.CompareTag("Coin"))
         {
+            
+            if(isImmune||isFrozen)
+                return;
+
             Coin coin = gameObject.GetComponent<Coin>();
 
             if (onCoinDestroyed != null)
