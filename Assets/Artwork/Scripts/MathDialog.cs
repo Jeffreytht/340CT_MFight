@@ -10,6 +10,8 @@ public class MathDialog : MonoBehaviour
     public TextMeshProUGUI ansRight;
     public TextMeshProUGUI question;
     public TextMeshProUGUI timerText;
+    public Button leftButton;
+    public Button rightButton;
     public Slider slider;
     public int timeToAnswer = 12;
 
@@ -87,16 +89,47 @@ public class MathDialog : MonoBehaviour
             StopCoroutine(timer);
     }
 
-
     public void AnsLeftSelected()
     {
+        if(correctAnsIdx==0)
+        {
+            leftButton.image.color = Color.green;
+            rightButton.image.color = Color.red;
+        }
+        else{
+            leftButton.image.color = Color.red;
+            rightButton.image.color = Color.green;
+        }
         OnPlayerScoreChanged(isPenalty, correctAnsIdx == 0 ? correctAns : score);
-        Close();
+        StartCoroutine(closeDialog());
+        
     }
 
     public void AnsRightSelected()
     {
+        if(correctAnsIdx==1)
+        {
+            leftButton.image.color = Color.red;
+            rightButton.image.color = Color.green;
+        }
+        else{
+            leftButton.image.color = Color.green;
+            rightButton.image.color = Color.red;
+        }
         OnPlayerScoreChanged(isPenalty, correctAnsIdx == 1 ? correctAns : score);
+        StartCoroutine(closeDialog());
+
+    }
+
+    IEnumerator closeDialog()
+    {
+        yield return new WaitForSeconds(1);
+        //set the button back to default color
+        Color defaultColor = new Color();
+        ColorUtility.TryParseHtmlString ("#F59F38", out defaultColor);
+        leftButton.image.color =  defaultColor;
+        rightButton.image.color = defaultColor;
+
         Close();
     }
 
