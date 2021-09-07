@@ -100,8 +100,8 @@ public class MathDialog : MonoBehaviour
             leftButton.image.color = Color.red;
             rightButton.image.color = Color.green;
         }
-        OnPlayerScoreChanged(isPenalty, correctAnsIdx == 0 ? correctAns : score);
-        StartCoroutine(closeDialog());
+        
+        StartCoroutine(closeDialog(correctAnsIdx==0?correctAns:score));
         
     }
 
@@ -116,21 +116,22 @@ public class MathDialog : MonoBehaviour
             leftButton.image.color = Color.green;
             rightButton.image.color = Color.red;
         }
-        OnPlayerScoreChanged(isPenalty, correctAnsIdx == 1 ? correctAns : score);
-        StartCoroutine(closeDialog());
+        
+        StartCoroutine(closeDialog(correctAnsIdx==1?correctAnsIdx:score));
 
     }
 
-    IEnumerator closeDialog()
+    IEnumerator closeDialog(int score)
     {
         yield return new WaitForSeconds(1);
+        OnPlayerScoreChanged(isPenalty,score);
         //set the button back to default color
         Color defaultColor = new Color();
         ColorUtility.TryParseHtmlString ("#F59F38", out defaultColor);
         leftButton.image.color =  defaultColor;
         rightButton.image.color = defaultColor;
-
         Close();
+
     }
 
     public void SetOnPlayerScoreChangedListener(OnPlayerScoreChanged listener)
