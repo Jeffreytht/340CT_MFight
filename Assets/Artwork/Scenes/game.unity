@@ -7433,7 +7433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinPrefab: {fileID: 8803618203631226929, guid: 3ea0368b05bd24140aeb176130906f4c, type: 3}
   tileMapController: {fileID: 912504693}
-  spawnInterval: 1
+  spawnInterval: 3
 --- !u!4 &1629647954
 Transform:
   m_ObjectHideFlags: 0
