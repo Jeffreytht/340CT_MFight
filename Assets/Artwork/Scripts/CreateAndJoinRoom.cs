@@ -81,6 +81,11 @@ public class CreateAndJoinRoom : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect ();
         SceneManager.LoadScene("menu");
     }
+
+    public void InstructionBoard()
+    {
+        SceneManager.LoadScene("instructionboard");
+    }
   
     public override void OnJoinedRoom()
     {
