@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Artwork/Scenes/leaderbroad.unity
     guid: 47ac924d2f7bee94e9528785e5544668
+  - enabled: 1
+    path: Assets/Artwork/Scenes/instructionboard.unity
+    guid: 6dfd393403abaca419c5a3ec93cef74f
   m_configObjects: {}
